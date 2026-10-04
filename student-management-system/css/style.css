@@ -1,0 +1,316 @@
+/* ==============================
+   GENERAL
+   ============================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6fa;
+    color: #222;
+}
+
+
+/* ==============================
+   LOGIN PAGE
+   ============================== */
+
+.login-container {
+    width: 400px;
+    max-width: 90%;
+    margin: 100px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 14px;
+    border-top: 6px solid #1565c0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.login-container h1 {
+    margin-bottom: 10px;
+    font-size: 28px;
+    color: #1565c0;
+}
+
+.login-container p {
+    margin-bottom: 25px;
+    color: #777;
+}
+
+
+/* ==============================
+   FORMS
+   ============================== */
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccd4dd;
+    border-radius: 7px;
+    font-size: 14px;
+    outline: none;
+    background: white;
+}
+
+input:focus {
+    border-color: #1565c0;
+    box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.1);
+}
+
+
+/* ==============================
+   BUTTONS
+   ============================== */
+
+button {
+    border: none;
+    border-radius: 7px;
+    padding: 11px 18px;
+    margin-top: 15px;
+    background: #f57c00;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e66f00;
+}
+
+
+/* ==============================
+   DASHBOARD LAYOUT
+   ============================== */
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ==============================
+   SIDEBAR
+   ============================== */
+
+.sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background: #1565c0;
+    color: white;
+    padding: 25px 18px;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 35px;
+    padding-left: 8px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar nav a {
+    color: white;
+    text-decoration: none;
+    padding: 13px 12px;
+    border-radius: 7px;
+    margin-bottom: 5px;
+    transition: 0.2s;
+}
+
+.sidebar nav a:hover {
+    background: #0d47a1;
+}
+
+.sidebar nav button {
+    width: 100%;
+    margin-top: 25px;
+    background: #f57c00;
+}
+
+.sidebar nav button:hover {
+    background: #e66f00;
+}
+
+
+/* ==============================
+   MAIN CONTENT
+   ============================== */
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+    overflow-x: auto;
+}
+
+.main-content h1 {
+    font-size: 30px;
+    margin-bottom: 30px;
+    color: #1565c0;
+}
+
+
+/* ==============================
+   DASHBOARD CARD
+   ============================== */
+
+.dashboard-card {
+    width: 300px;
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    border-left: 5px solid #f57c00;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.dashboard-card h3 {
+    color: #777;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.dashboard-card p {
+    font-size: 42px;
+    font-weight: bold;
+    color: #1565c0;
+}
+
+
+/* ==============================
+   SEARCH
+   ============================== */
+
+#searchInput {
+    max-width: 400px;
+    margin-bottom: 20px;
+    border: 1px solid #ccd4dd;
+}
+
+#searchInput:focus {
+    border-color: #f57c00;
+}
+
+
+/* ==============================
+   TABLE
+   ============================== */
+
+table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+thead {
+    background: #1565c0;
+    color: white;
+}
+
+th {
+    text-align: left;
+    padding: 14px;
+    font-size: 13px;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: #f5f9ff;
+}
+
+
+/* ==============================
+   TABLE BUTTONS
+   ============================== */
+
+td button {
+    margin: 0 4px 0 0;
+    padding: 8px 12px;
+    font-size: 12px;
+}
+
+td button:first-child {
+    background: #1565c0;
+}
+
+td button:first-child:hover {
+    background: #0d47a1;
+}
+
+td button:last-child {
+    background: #f57c00;
+}
+
+td button:last-child:hover {
+    background: #e66f00;
+}
+
+
+/* ==============================
+   MESSAGES
+   ============================== */
+
+#loginMessage,
+#studentMessage,
+#editMessage {
+    margin-top: 15px;
+    color: #1565c0;
+}
+
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 768px) {
+
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 15px;
+    }
+
+    .main-content {
+        padding: 25px;
+    }
+
+    .dashboard-card {
+        width: 100%;
+    }
+
+}
