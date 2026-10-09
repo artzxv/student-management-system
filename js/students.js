@@ -1,4 +1,9 @@
-import { auth, db } from "./firebase.js";
+import {
+    collection,
+    getDocs,
+    deleteDoc,
+    doc
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 import {
     onAuthStateChanged,
@@ -6,19 +11,41 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 import {
-    collection,
-    addDoc,
-    getDocs,
-    deleteDoc,
-    doc
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    db,
+    auth
+} from "./firebase.js";
 
 
-// ==============================
-// CHECK LOGIN
-// ==============================
+const studentTableBody =
+    document.getElementById("studentTableBody");
 
-onAuthStateChanged(auth, async (user) => {
+const searchInput =
+    document.getElementById("searchInput");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+
+const deleteModal =
+    document.getElementById("deleteModal");
+
+const cancelDelete =
+    document.getElementById("cancelDelete");
+
+const confirmDelete =
+    document.getElementById("confirmDelete");
+
+
+let students = [];
+
+let studentToDelete = null;
+
+
+/* =========================
+   AUTHENTICATION
+========================= */
+
+onAuthStateChanged(auth, (user) => {
 
     if (!user) {
 
@@ -33,315 +60,368 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 
-// ==============================
-// ADD STUDENT
-// ==============================
-
-const studentForm =
-    document.getElementById("studentForm");
-
-
-if (studentForm) {
-
-    studentForm.addEventListener("submit", async (event) => {
-
-        event.preventDefault();
-
-
-        const studentId =
-            document.getElementById("studentId").value.trim();
-
-        const fullName =
-            document.getElementById("fullName").value.trim();
-
-        const age =
-            document.getElementById("age").value;
-
-        const program =
-            document.getElementById("program").value.trim();
-
-        const section =
-            document.getElementById("section").value.trim();
-
-        const contact =
-            document.getElementById("contact").value.trim();
-
-        const email =
-            document.getElementById("email").value.trim();
-
-
-        try {
-
-            await addDoc(collection(db, "students"), {
-
-                studentId: studentId,
-                fullName: fullName,
-                age: Number(age),
-                program: program,
-                section: section,
-                contact: contact,
-                email: email
-
-            });
-
-
-            document.getElementById("studentMessage").textContent =
-                "Student added successfully!";
-
-
-            studentForm.reset();
-
-
-        } catch (error) {
-
-            console.error("Error adding student:", error);
-
-            document.getElementById("studentMessage").textContent =
-                "Error adding student.";
-
-        }
-
-    });
-
-}
-
-
-// ==============================
-// DISPLAY STUDENTS
-// ==============================
+/* =========================
+   LOAD STUDENTS
+========================= */
 
 async function loadStudents() {
 
-    const tableBody =
-        document.getElementById("studentTableBody");
-
-
-    if (!tableBody) {
-
-        return;
-
-    }
-
-
     try {
 
-        const studentsSnapshot =
-            await getDocs(collection(db, "students"));
+        const snapshot =
+            await getDocs(
+                collection(db, "students")
+            );
 
 
-        const students = [];
+        students = [];
 
 
-        studentsSnapshot.forEach((student) => {
+        snapshot.forEach((studentDoc) => {
 
             students.push({
 
-                id: student.id,
+                id: studentDoc.id,
 
-                ...student.data()
+                ...studentDoc.data()
 
             });
 
         });
 
 
-        function displayStudents(searchText = "") {
+        /* SORT STUDENT ID ASCENDING */
 
-            tableBody.innerHTML = "";
+        students.sort((a, b) => {
 
+            return a.studentId.localeCompare(
+                b.studentId,
+                undefined,
+                {
+                    numeric: true
+                }
+            );
 
-            const search =
-                searchText.toLowerCase().trim();
-
-
-            const filteredStudents =
-                students.filter((student) => {
-
-                    const studentId =
-                        String(student.studentId || "")
-                            .toLowerCase();
-
-                    const fullName =
-                        String(student.fullName || "")
-                            .toLowerCase();
+        });
 
 
-                    return (
-                        studentId.includes(search) ||
-                        fullName.includes(search)
-                    );
-
-                });
-
-
-            filteredStudents.forEach((student) => {
-
-                const row =
-                    document.createElement("tr");
-
-
-                row.innerHTML = `
-
-                    <td>${student.studentId}</td>
-
-                    <td>${student.fullName}</td>
-
-                    <td>${student.age}</td>
-
-                    <td>${student.program}</td>
-
-                    <td>${student.section}</td>
-
-                    <td>${student.contact}</td>
-
-                    <td>${student.email}</td>
-
-                    <td>
-
-                        <button
-                            onclick="editStudent('${student.id}')">
-                            Edit
-                        </button>
-
-                        <button
-                            onclick="deleteStudent('${student.id}')">
-                            Delete
-                        </button>
-
-                    </td>
-
-                `;
-
-
-                tableBody.appendChild(row);
-
-            });
-
-
-            if (filteredStudents.length === 0) {
-
-                const row =
-                    document.createElement("tr");
-
-
-                row.innerHTML = `
-                    <td colspan="8">
-                        No students found.
-                    </td>
-                `;
-
-
-                tableBody.appendChild(row);
-
-            }
-
-        }
-
-
-        displayStudents();
-
-
-        const searchInput =
-            document.getElementById("searchInput");
-
-
-        if (searchInput) {
-
-            searchInput.addEventListener("input", () => {
-
-                displayStudents(searchInput.value);
-
-            });
-
-        }
+        displayStudents(students);
 
 
     } catch (error) {
 
-        console.error("Error loading students:", error);
+        console.error(
+            "Error loading students:",
+            error
+        );
 
     }
 
 }
 
 
-// ==============================
-// EDIT STUDENT
-// ==============================
+/* =========================
+   DISPLAY STUDENTS
+========================= */
 
-window.editStudent = function(studentId) {
+function displayStudents(studentList) {
 
-    window.location.href =
-        `edit-student.html?id=${studentId}`;
-
-};
+    studentTableBody.innerHTML = "";
 
 
-// ==============================
-// DELETE STUDENT
-// ==============================
+    if (studentList.length === 0) {
 
-window.deleteStudent = async function(studentId) {
-
-    const confirmDelete =
-        confirm("Are you sure you want to delete this student?");
-
-
-    if (!confirmDelete) {
+        studentTableBody.innerHTML = `
+            <tr>
+                <td colspan="10" style="text-align:center;">
+                    No students found.
+                </td>
+            </tr>
+        `;
 
         return;
 
     }
 
 
-    try {
+    studentList.forEach((student) => {
 
-        await deleteDoc(
-            doc(db, "students", studentId)
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+                ${student.studentId || ""}
+            </td>
+
+            <td>
+                ${student.fullName || ""}
+            </td>
+
+            <td>
+                ${student.age || ""}
+            </td>
+
+            <td>
+                ${student.program || ""}
+            </td>
+
+            <td>
+                ${student.section || ""}
+            </td>
+
+            <td>
+                ${student.contact || ""}
+            </td>
+
+            <td>
+                ${student.email || ""}
+            </td>
+
+            <td>
+                ${student.guardianName || ""}
+            </td>
+
+            <td>
+                ${student.guardianContact || ""}
+            </td>
+
+            <td>
+
+                <a
+                    href="edit-student.html?id=${student.id}"
+                    class="edit-button"
+                >
+                    Edit
+                </a>
+
+                <button
+                    class="delete-button"
+                    data-id="${student.id}"
+                >
+                    Delete
+                </button>
+
+            </td>
+
+        `;
+
+
+        studentTableBody.appendChild(row);
+
+    });
+
+
+    /* ADD DELETE BUTTON EVENTS */
+
+    document
+        .querySelectorAll(".delete-button")
+        .forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    studentToDelete =
+                        button.dataset.id;
+
+                    deleteModal.classList.add(
+                        "show"
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+searchInput.addEventListener(
+    "input",
+    () => {
+
+        const searchValue =
+            searchInput.value
+                .toLowerCase()
+                .trim();
+
+
+        const filteredStudents =
+            students.filter((student) => {
+
+                const studentId =
+                    String(
+                        student.studentId || ""
+                    ).toLowerCase();
+
+                const fullName =
+                    String(
+                        student.fullName || ""
+                    ).toLowerCase();
+
+                const program =
+                    String(
+                        student.program || ""
+                    ).toLowerCase();
+
+
+                return (
+
+                    studentId.includes(
+                        searchValue
+                    )
+
+                    ||
+
+                    fullName.includes(
+                        searchValue
+                    )
+
+                    ||
+
+                    program.includes(
+                        searchValue
+                    )
+
+                );
+
+            });
+
+
+        displayStudents(
+            filteredStudents
         );
 
-
-        alert("Student deleted successfully!");
-
-
-        location.reload();
+    }
+);
 
 
-    } catch (error) {
+/* =========================
+   CANCEL DELETE
+========================= */
 
-        console.error("Error deleting student:", error);
+cancelDelete.addEventListener(
+    "click",
+    () => {
 
-        alert("Error deleting student.");
+        studentToDelete = null;
+
+        deleteModal.classList.remove(
+            "show"
+        );
 
     }
-
-};
-
-
-// ==============================
-// LOGOUT
-// ==============================
-
-const logoutButton =
-    document.getElementById("logoutButton");
+);
 
 
-if (logoutButton) {
+/* =========================
+   CONFIRM DELETE
+========================= */
 
-    logoutButton.addEventListener("click", async () => {
+confirmDelete.addEventListener(
+    "click",
+    async () => {
+
+        if (!studentToDelete) {
+
+            return;
+
+        }
+
+
+        try {
+
+            await deleteDoc(
+                doc(
+                    db,
+                    "students",
+                    studentToDelete
+                )
+            );
+
+
+            studentToDelete = null;
+
+            deleteModal.classList.remove(
+                "show"
+            );
+
+
+            await loadStudents();
+
+
+        } catch (error) {
+
+            console.error(
+                "Error deleting student:",
+                error
+            );
+
+            alert(
+                "Error deleting student."
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   CLOSE MODAL
+========================= */
+
+deleteModal.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            event.target === deleteModal
+        ) {
+
+            studentToDelete = null;
+
+            deleteModal.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+logoutButton.addEventListener(
+    "click",
+    async () => {
 
         try {
 
             await signOut(auth);
 
-            window.location.href = "index.html";
+            window.location.href =
+                "index.html";
 
         } catch (error) {
 
-            console.error("Logout error:", error);
+            console.error(
+                "Logout error:",
+                error
+            );
 
         }
 
-    });
-
-}
+    }
+);
