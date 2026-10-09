@@ -2,123 +2,379 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Edit Student - Student Management System</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="css/style.css">
+    <title>
+        Edit Student - Student Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
 </head>
+
 
 <body>
 
     <div class="dashboard-container">
 
+
+        <!-- SIDEBAR -->
+
         <aside class="sidebar">
 
-            <h2>Student Management</h2>
+            <h2>
+                Student Management
+            </h2>
 
             <nav>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="students.html">Students</a>
-                <a href="add-student.html">Add Student</a>
 
-                <button id="logoutButton">Logout</button>
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="students.html">
+                    Students
+                </a>
+
+                <a href="add-student.html">
+                    Add Student
+                </a>
+
+                <button id="logoutButton">
+                    Logout
+                </button>
+
             </nav>
 
         </aside>
 
 
-        <main class="main-content">
+        <!-- MAIN CONTENT -->
 
-            <h1>Edit Student</h1>
+        <main class="add-student-content">
 
-            <form id="editStudentForm">
+            <div class="add-student-card">
 
-                <label for="studentId">Student ID</label>
+                <h1>
+                    Edit Student
+                </h1>
 
-                <input
-                    type="text"
-                    id="studentId"
-                    required
-                >
-
-
-                <label for="fullName">Full Name</label>
-
-                <input
-                    type="text"
-                    id="fullName"
-                    required
-                >
+                <p class="add-student-description">
+                    Update the student's information below.
+                </p>
 
 
-                <label for="age">Age</label>
-
-                <input
-                    type="number"
-                    id="age"
-                    required
-                >
+                <form id="editStudentForm">
 
 
-                <label for="program">Course / Program</label>
+                    <!-- STUDENT INFORMATION -->
 
-                <input
-                    type="text"
-                    id="program"
-                    required
-                >
+                    <div class="section-title">
 
+                        <span></span>
 
-                <label for="section">Section</label>
+                        <h2>
+                            Student Information
+                        </h2>
 
-                <input
-                    type="text"
-                    id="section"
-                    required
-                >
+                    </div>
 
 
-                <label for="contact">Contact Number</label>
+                    <!-- STUDENT ID -->
 
-                <input
-                    type="text"
-                    id="contact"
-                    required
-                >
+                    <div class="form-group full-width">
 
+                        <label for="studentId">
+                            Student ID
+                        </label>
 
-                <label for="email">Email</label>
+                        <input
+                            type="text"
+                            id="studentId"
+                            readonly
+                        >
 
-                <input
-                    type="email"
-                    id="email"
-                    required
-                >
-
-
-                <button type="submit">
-                    Save Changes
-                </button>
-
-                <button
-                    type="button"
-                    onclick="window.location.href='students.html'">
-                    Cancel
-                </button>
+                    </div>
 
 
-                <p id="editMessage"></p>
+                    <!-- FIRST NAME -->
 
-            </form>
+                    <div class="form-group">
+
+                        <label for="firstName">
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="firstName"
+                            placeholder="Enter first name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- MIDDLE NAME -->
+
+                    <div class="form-group">
+
+                        <label for="middleName">
+                            Middle Name
+                            <span class="optional-label">
+                                (Optional)
+                            </span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="middleName"
+                            placeholder="Enter middle name"
+                        >
+
+                    </div>
+
+
+                    <!-- LAST NAME -->
+
+                    <div class="form-group">
+
+                        <label for="lastName">
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            placeholder="Enter last name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- AGE -->
+
+                    <div class="form-group">
+
+                        <label for="age">
+                            Age
+                        </label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            placeholder="Enter age"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PROGRAM -->
+
+                    <div class="form-group">
+
+                        <label for="program">
+                            Program
+                        </label>
+
+                        <select
+                            id="program"
+                            required
+                        >
+
+                            <option value="">
+                                Select program
+                            </option>
+
+                            <option value="BSCS">
+                                BSCS
+                            </option>
+
+                            <option value="BSIT">
+                                BSIT
+                            </option>
+
+                            <option value="BSEd">
+                                BSEd
+                            </option>
+
+                            <option value="BSBA">
+                                BSBA
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                        <input
+                            type="text"
+                            id="otherProgram"
+                            placeholder="Enter program"
+                        >
+
+                    </div>
+
+
+                    <!-- SECTION -->
+
+                    <div class="form-group">
+
+                        <label for="section">
+                            Section
+                        </label>
+
+                        <input
+                            type="text"
+                            id="section"
+                            placeholder="Enter section"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CONTACT -->
+
+                    <div class="form-group">
+
+                        <label for="contact">
+                            Contact Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="contact"
+                            placeholder="11-digit contact number"
+                            maxlength="11"
+                            inputmode="numeric"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- GUARDIAN INFORMATION -->
+
+                    <div class="section-title guardian-section">
+
+                        <span></span>
+
+                        <h2>
+                            Guardian Information
+                        </h2>
+
+                    </div>
+
+
+                    <!-- GUARDIAN NAME -->
+
+                    <div class="form-group">
+
+                        <label for="guardianName">
+                            Guardian Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="guardianName"
+                            placeholder="Enter guardian name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- GUARDIAN CONTACT -->
+
+                    <div class="form-group">
+
+                        <label for="guardianContact">
+                            Guardian Contact Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="guardianContact"
+                            placeholder="11-digit contact number"
+                            maxlength="11"
+                            inputmode="numeric"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- SAVE CHANGES -->
+
+                    <button
+                        type="submit"
+                        class="add-student-submit"
+                    >
+                        Save Changes
+                    </button>
+
+
+                    <!-- CANCEL -->
+
+                    <button
+                        type="button"
+                        id="cancelButton"
+                        class="edit-cancel-button"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <!-- MESSAGE -->
+
+                    <p id="editMessage"></p>
+
+
+                </form>
+
+            </div>
 
         </main>
 
     </div>
 
 
-    <script type="module" src="js/edit-student.js"></script>
+    <script
+        type="module"
+        src="js/edit-student.js"
+    ></script>
 
 </body>
 
