@@ -2,74 +2,688 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Students - Student Management System</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="css/style.css">
+    <title>
+        Students - Student Management System
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =========================
+           SIDEBAR TITLE + LOGO
+        ========================= */
+
+        .sidebar-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 8px;
+
+            margin-bottom: 18px;
+        }
+
+        .sidebar-title h2 {
+            margin: 0;
+
+            text-align: left;
+
+            font-size: 18px;
+
+            line-height: 1.2;
+        }
+
+        .school-logo {
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+
+            background: white;
+
+            border-radius: 5px;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =========================
+           ADMIN PROFILE
+        ========================= */
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            margin-bottom: 25px;
+
+            padding-left: 0;
+        }
+
+        .admin-circle {
+            width: 34px;
+            height: 34px;
+
+            background: white;
+
+            color: #1565c0;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+        }
+
+        .admin-profile span {
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           SIDEBAR NAVIGATION
+        ========================= */
+
+        .sidebar nav {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .sidebar nav a {
+            display: block;
+
+            width: 100%;
+
+            padding: 12px 15px;
+
+            border-radius: 7px;
+
+            background: transparent;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .sidebar nav a:hover {
+            background: #0d47a1;
+        }
+
+
+        /* =========================
+           LOGOUT
+        ========================= */
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .sidebar-bottom button {
+            display: block;
+
+            width: 100%;
+
+            padding: 12px 15px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: #f57c00;
+
+            color: white;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .sidebar-bottom button:hover {
+            background: #e66f00;
+        }
+
+
+        /* =========================
+           STUDENTS TABLE
+        ========================= */
+
+        .students-table-wrapper {
+            width: 100%;
+
+            overflow: hidden;
+        }
+
+        .students-table-wrapper table {
+            width: 100%;
+
+            table-layout: fixed;
+
+            border-collapse: collapse;
+
+            background: white;
+        }
+
+        .students-table-wrapper th {
+            background: #1565c0;
+
+            color: white;
+
+            padding: 11px 5px;
+
+            font-size: 11px;
+
+            text-align: center;
+
+            white-space: normal;
+        }
+
+        .students-table-wrapper td {
+            padding: 10px 5px;
+
+            font-size: 11px;
+
+            text-align: center;
+
+            border-bottom: 1px solid #e5e5e5;
+
+            word-break: break-word;
+
+            overflow-wrap: anywhere;
+        }
+
+        .students-table-wrapper tr:hover {
+            background: #f7f9fc;
+        }
+
+
+        /* =========================
+           COLUMN SIZES
+        ========================= */
+
+        .students-table-wrapper th:nth-child(1),
+        .students-table-wrapper td:nth-child(1) {
+            width: 8%;
+        }
+
+        .students-table-wrapper th:nth-child(2),
+        .students-table-wrapper td:nth-child(2) {
+            width: 12%;
+        }
+
+        .students-table-wrapper th:nth-child(3),
+        .students-table-wrapper td:nth-child(3) {
+            width: 5%;
+        }
+
+        .students-table-wrapper th:nth-child(4),
+        .students-table-wrapper td:nth-child(4) {
+            width: 7%;
+        }
+
+        .students-table-wrapper th:nth-child(5),
+        .students-table-wrapper td:nth-child(5) {
+            width: 7%;
+        }
+
+        .students-table-wrapper th:nth-child(6),
+        .students-table-wrapper td:nth-child(6) {
+            width: 9%;
+        }
+
+        .students-table-wrapper th:nth-child(7),
+        .students-table-wrapper td:nth-child(7) {
+            width: 12%;
+        }
+
+        .students-table-wrapper th:nth-child(8),
+        .students-table-wrapper td:nth-child(8) {
+            width: 12%;
+        }
+
+        .students-table-wrapper th:nth-child(9),
+        .students-table-wrapper td:nth-child(9) {
+            width: 12%;
+        }
+
+        .students-table-wrapper th:nth-child(10),
+        .students-table-wrapper td:nth-child(10) {
+            width: 16%;
+        }
+
+
+        /* =========================
+           EDIT BUTTON
+        ========================= */
+
+        .edit-button {
+            display: inline-block;
+
+            padding: 7px 10px;
+
+            background: #1565c0;
+
+            color: white !important;
+
+            border-radius: 6px;
+
+            text-decoration: none !important;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin: 2px;
+        }
+
+        .edit-button:hover {
+            background: #0d47a1;
+        }
+
+
+        /* =========================
+           DELETE BUTTON
+        ========================= */
+
+        .delete-button {
+            display: inline-block;
+
+            padding: 7px 10px;
+
+            background: #f57c00;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin: 2px;
+        }
+
+        .delete-button:hover {
+            background: #e66f00;
+        }
+
+
+        /* =========================
+           DELETE MODAL
+        ========================= */
+
+        .delete-modal {
+            display: none;
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            right: 0;
+
+            bottom: 0;
+
+            background: rgba(0, 0, 0, 0.45);
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 9999;
+        }
+
+        .delete-modal.show {
+            display: flex;
+        }
+
+        .delete-box {
+            width: 380px;
+
+            max-width: 90%;
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .delete-box h2 {
+            margin-top: 0;
+
+            color: #222;
+        }
+
+        .delete-box p {
+            color: #666;
+
+            margin-bottom: 25px;
+        }
+
+        .delete-actions {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 10px;
+        }
+
+        .delete-actions button {
+            padding: 10px 22px;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        #cancelDelete {
+            background: #e0e0e0;
+
+            color: #333;
+        }
+
+        #cancelDelete:hover {
+            background: #d0d0d0;
+        }
+
+        #confirmDelete {
+            background: #d32f2f;
+
+            color: white;
+        }
+
+        #confirmDelete:hover {
+            background: #b71c1c;
+        }
+
+
+        /* =========================
+           SMALLER SCREEN
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .students-table-wrapper th {
+                font-size: 10px;
+            }
+
+            .students-table-wrapper td {
+                font-size: 10px;
+
+                padding: 8px 4px;
+            }
+
+            .edit-button,
+            .delete-button {
+                padding: 6px 7px;
+
+                font-size: 10px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
+
     <div class="dashboard-container">
+
+
+        <!-- SIDEBAR -->
 
         <aside class="sidebar">
 
-            <h2>Student Management</h2>
+
+            <!-- TITLE + SCHOOL LOGO -->
+
+            <div class="sidebar-title">
+
+                <h2>
+                    Student Management
+                </h2>
+
+                <img
+                    src="logo/slogo.jpg"
+                    alt="Vision Academy Logo"
+                    class="school-logo"
+                >
+
+            </div>
+
+
+            <!-- ADMIN -->
+
+            <div class="admin-profile">
+
+                <div class="admin-circle">
+                    👤
+                </div>
+
+                <span>
+                    Admin
+                </span>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
 
             <nav>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="students.html">Students</a>
-                <a href="add-student.html">Add Student</a>
 
-                <button id="logoutButton">Logout</button>
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="students.html">
+                    Students
+                </a>
+
+                <a href="add-student.html">
+                    Add Student
+                </a>
+
             </nav>
+
+
+            <!-- LOGOUT -->
+
+            <div class="sidebar-bottom">
+
+                <button id="logoutButton">
+                    Logout
+                </button>
+
+            </div>
+
 
         </aside>
 
 
+        <!-- MAIN CONTENT -->
+
         <main class="main-content">
 
-            <h1>Students</h1>
+
+            <h1>
+                Students
+            </h1>
+
+
+            <!-- SEARCH -->
 
             <input
                 type="text"
                 id="searchInput"
-                placeholder="Search by Student ID or Full Name"
+                placeholder="Search by Student ID, Full Name, or Program"
             >
 
 
-            <table>
+            <!-- STUDENTS TABLE -->
 
-                <thead>
+            <div class="students-table-wrapper">
 
-                    <tr>
-                        <th>Student ID</th>
-                        <th>Full Name</th>
-                        <th>Age</th>
-                        <th>Program</th>
-                        <th>Section</th>
-                        <th>Contact</th>
-                        <th>Email</th>
-                        <th>Actions</th>
-                    </tr>
+                <table>
 
-                </thead>
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Student ID
+                            </th>
+
+                            <th>
+                                Full Name
+                            </th>
+
+                            <th>
+                                Age
+                            </th>
+
+                            <th>
+                                Program
+                            </th>
+
+                            <th>
+                                Section
+                            </th>
+
+                            <th>
+                                Contact
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Guardian Name
+                            </th>
+
+                            <th>
+                                Guardian Contact
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
 
 
-                <tbody id="studentTableBody">
+                    <tbody id="studentTableBody">
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+
+            </div>
+
 
         </main>
 
     </div>
 
 
-    <script type="module" src="js/students.js"></script>
+    <!-- DELETE MODAL -->
+
+    <div
+        id="deleteModal"
+        class="delete-modal"
+    >
+
+        <div class="delete-box">
+
+            <h2>
+                Delete Student
+            </h2>
+
+            <p>
+                Are you sure you want to delete this student?
+            </p>
+
+
+            <div class="delete-actions">
+
+                <button id="cancelDelete">
+                    Cancel
+                </button>
+
+                <button id="confirmDelete">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script
+        type="module"
+        src="js/students.js"
+    ></script>
+
 
 </body>
 
