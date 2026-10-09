@@ -16,7 +16,7 @@ body {
 
 
 /* ==============================
-   LOGIN PAGE
+   LOGIN
    ============================== */
 
 .login-container {
@@ -43,7 +43,7 @@ body {
 
 
 /* ==============================
-   FORMS
+   FORM
    ============================== */
 
 form {
@@ -59,7 +59,8 @@ label {
     color: #333;
 }
 
-input {
+input,
+select {
     width: 100%;
     padding: 12px 14px;
     border: 1px solid #ccd4dd;
@@ -69,15 +70,11 @@ input {
     background: white;
 }
 
-input:focus {
+input:focus,
+select:focus {
     border-color: #1565c0;
     box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.1);
 }
-
-
-/* ==============================
-   BUTTONS
-   ============================== */
 
 button {
     border: none;
@@ -97,7 +94,7 @@ button:hover {
 
 
 /* ==============================
-   DASHBOARD LAYOUT
+   DASHBOARD
    ============================== */
 
 .dashboard-container {
@@ -116,6 +113,7 @@ button:hover {
     background: #1565c0;
     color: white;
     padding: 25px 18px;
+    flex-shrink: 0;
 }
 
 .sidebar h2 {
@@ -212,12 +210,12 @@ button:hover {
 
 
 /* ==============================
-   TABLE
+   STUDENTS TABLE
    ============================== */
 
 table {
     width: 100%;
-    min-width: 900px;
+    min-width: 1150px;
     border-collapse: collapse;
     background: white;
     border-radius: 10px;
@@ -234,22 +232,19 @@ th {
     text-align: left;
     padding: 14px;
     font-size: 13px;
+    white-space: nowrap;
 }
 
 td {
     padding: 14px;
     border-bottom: 1px solid #eee;
     font-size: 14px;
+    white-space: nowrap;
 }
 
 tbody tr:hover {
     background: #f5f9ff;
 }
-
-
-/* ==============================
-   TABLE BUTTONS
-   ============================== */
 
 td button {
     margin: 0 4px 0 0;
@@ -287,7 +282,335 @@ td button:last-child:hover {
 
 
 /* ==============================
-   RESPONSIVE
+   ADD / EDIT STUDENT PAGE
+   ============================== */
+
+.add-student-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px 35px;
+    overflow: auto;
+}
+
+
+/* ==============================
+   ADD / EDIT CARD
+   ============================== */
+
+.add-student-card {
+    width: 800px;
+    max-width: 100%;
+    background: white;
+    border-radius: 14px;
+    border-top: 6px solid #1565c0;
+    padding: 22px 42px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.add-student-card h1 {
+    color: #1565c0;
+    font-size: 29px;
+    margin-bottom: 4px;
+}
+
+.add-student-description {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 13px;
+}
+
+
+/* ==============================
+   SECTION TITLES
+   ============================== */
+
+.section-title {
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    grid-column: 1 / 3;
+}
+
+.section-title span {
+    width: 5px;
+    height: 25px;
+    background: #f57c00;
+    margin-right: 10px;
+    border-radius: 2px;
+}
+
+.section-title h2 {
+    font-size: 18px;
+    color: #222;
+}
+
+.guardian-section {
+    margin-top: 5px;
+}
+
+
+/* ==============================
+   TWO COLUMN FORM
+   ============================== */
+
+.add-student-card #studentForm,
+.add-student-card #editStudentForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 25px;
+    row-gap: 6px;
+}
+
+
+/* ==============================
+   FORM GROUP
+   ============================== */
+
+.add-student-card .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-student-card .form-group label {
+    margin: 0 0 3px 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: #263238;
+}
+
+.add-student-card input,
+.add-student-card select {
+    width: 100%;
+    height: 36px;
+    padding: 7px 12px;
+    border: 1px solid #ccd4dd;
+    border-radius: 7px;
+    font-size: 13px;
+    outline: none;
+    background: white;
+    color: #222;
+}
+
+.add-student-card input:focus,
+.add-student-card select:focus {
+    border-color: #1565c0;
+    box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.1);
+}
+
+.add-student-card select {
+    cursor: pointer;
+}
+
+
+/* ==============================
+   STUDENT ID
+   ============================== */
+
+#studentId {
+    background: #f3f6fa;
+    color: #555;
+    cursor: not-allowed;
+}
+
+
+/* ==============================
+   OTHER PROGRAM
+   ============================== */
+
+#otherProgram {
+    display: none;
+    margin-top: 5px;
+}
+
+
+/* ==============================
+   FULL WIDTH
+   ============================== */
+
+.add-student-card .full-width {
+    grid-column: 1 / 3;
+}
+
+
+/* ==============================
+   SAVE / ADD BUTTON
+   ============================== */
+
+.add-student-submit {
+    grid-column: 1 / 3;
+    width: 100%;
+    height: 40px;
+    margin-top: 8px;
+    background: #f57c00;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.add-student-submit:hover {
+    background: #e66f00;
+}
+
+
+/* ==============================
+   CANCEL BUTTON
+   ============================== */
+
+.edit-cancel-button {
+    grid-column: 1 / 3;
+    width: 100%;
+    height: 40px;
+    margin-top: 0;
+    background: #1565c0;
+    border-radius: 7px;
+    font-size: 14px;
+}
+
+.edit-cancel-button:hover {
+    background: #0d47a1;
+}
+
+
+/* ==============================
+   OPTIONAL LABEL
+   ============================== */
+
+.optional-label {
+    font-weight: normal;
+    color: #777;
+    font-size: 12px;
+}
+
+
+/* ==============================
+   FORM MESSAGES
+   ============================== */
+
+.add-student-card #studentMessage,
+.add-student-card #editMessage {
+    grid-column: 1 / 3;
+    margin-top: 0;
+}
+
+
+/* ==============================
+   DELETE MODAL
+   ============================== */
+
+.delete-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.delete-box {
+    width: 380px;
+    max-width: 90%;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    border-top: 5px solid #f57c00;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.delete-box h2 {
+    color: #1565c0;
+    margin-bottom: 12px;
+    font-size: 22px;
+}
+
+.delete-box p {
+    color: #555;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.delete-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.delete-actions button {
+    margin-top: 0;
+    min-width: 90px;
+}
+
+#cancelDelete {
+    background: #1565c0;
+}
+
+#cancelDelete:hover {
+    background: #0d47a1;
+}
+
+#confirmDelete {
+    background: #f57c00;
+}
+
+#confirmDelete:hover {
+    background: #e66f00;
+}
+
+
+/* ==============================
+   SHORT SCREEN
+   ============================== */
+
+@media (max-height: 750px) and (min-width: 769px) {
+
+    .add-student-content {
+        padding: 12px 25px;
+    }
+
+    .add-student-card {
+        padding: 16px 42px;
+    }
+
+    .add-student-card h1 {
+        font-size: 26px;
+    }
+
+    .add-student-description {
+        margin-bottom: 8px;
+    }
+
+    .section-title {
+        margin-bottom: 3px;
+    }
+
+    .add-student-card #studentForm,
+    .add-student-card #editStudentForm {
+        row-gap: 4px;
+    }
+
+    .add-student-card input,
+    .add-student-card select {
+        height: 34px;
+    }
+
+    .add-student-submit,
+    .edit-cancel-button {
+        height: 37px;
+        margin-top: 5px;
+    }
+
+}
+
+
+/* ==============================
+   MOBILE
    ============================== */
 
 @media (max-width: 768px) {
@@ -311,6 +634,31 @@ td button:last-child:hover {
 
     .dashboard-card {
         width: 100%;
+    }
+
+    .add-student-content {
+        min-height: auto;
+        padding: 20px 15px;
+        overflow: auto;
+    }
+
+    .add-student-card {
+        width: 100%;
+        padding: 22px 20px;
+    }
+
+    .add-student-card #studentForm,
+    .add-student-card #editStudentForm {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title,
+    .full-width,
+    .add-student-submit,
+    .edit-cancel-button,
+    .add-student-card #studentMessage,
+    .add-student-card #editMessage {
+        grid-column: 1;
     }
 
 }
