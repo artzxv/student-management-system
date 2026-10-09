@@ -13,53 +13,67 @@ import {
 
 
 // ==============================
-// GET STUDENT ID FROM URL
+// GET STUDENT DOCUMENT ID
 // ==============================
 
-const urlParams = new URLSearchParams(window.location.search);
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
 
-const studentId = urlParams.get("id");
+const studentDocumentId =
+    urlParams.get("id");
 
 
 // ==============================
 // CHECK LOGIN
 // ==============================
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
-    if (!user) {
+        if (!user) {
 
-        window.location.href = "index.html";
+            window.location.href =
+                "index.html";
 
-        return;
+            return;
+
+        }
+
+        if (!studentDocumentId) {
+
+            document.getElementById(
+                "editMessage"
+            ).textContent =
+                "Student not found.";
+
+            return;
+
+        }
+
+        await loadStudent();
 
     }
-
-    loadStudent();
-
-});
+);
 
 
 // ==============================
-// LOAD STUDENT INFORMATION
+// LOAD STUDENT
 // ==============================
 
 async function loadStudent() {
 
-    if (!studentId) {
-
-        document.getElementById("editMessage").textContent =
-            "Student not found.";
-
-        return;
-
-    }
-
-
     try {
 
         const studentRef =
-            doc(db, "students", studentId);
+            doc(
+                db,
+                "students",
+                studentDocumentId
+            );
+
 
         const studentSnapshot =
             await getDoc(studentRef);
@@ -67,7 +81,9 @@ async function loadStudent() {
 
         if (!studentSnapshot.exists()) {
 
-            document.getElementById("editMessage").textContent =
+            document.getElementById(
+                "editMessage"
+            ).textContent =
                 "Student not found.";
 
             return;
@@ -75,36 +91,168 @@ async function loadStudent() {
         }
 
 
-        const student = studentSnapshot.data();
+        const student =
+            studentSnapshot.data();
 
 
-        document.getElementById("studentId").value =
+        // STUDENT ID
+
+        document.getElementById(
+            "studentId"
+        ).value =
             student.studentId || "";
 
-        document.getElementById("fullName").value =
-            student.fullName || "";
 
-        document.getElementById("age").value =
+        // FIRST NAME
+
+        document.getElementById(
+            "firstName"
+        ).value =
+            student.firstName || "";
+
+
+        // MIDDLE NAME
+
+        document.getElementById(
+            "middleName"
+        ).value =
+            student.middleName || "";
+
+
+        // LAST NAME
+
+        document.getElementById(
+            "lastName"
+        ).value =
+            student.lastName || "";
+
+
+        // AGE
+
+        document.getElementById(
+            "age"
+        ).value =
             student.age || "";
 
-        document.getElementById("program").value =
+
+        // PROGRAM
+
+        const programSelect =
+            document.getElementById(
+                "program"
+            );
+
+        const otherProgram =
+            document.getElementById(
+                "otherProgram"
+            );
+
+
+        const program =
             student.program || "";
 
-        document.getElementById("section").value =
+
+        const standardPrograms = [
+            "BSCS",
+            "BSIT",
+            "BSEd",
+            "BSBA"
+        ];
+
+
+        if (
+            standardPrograms.includes(
+                program
+            )
+        ) {
+
+            programSelect.value =
+                program;
+
+            otherProgram.style.display =
+                "none";
+
+            otherProgram.required =
+                false;
+
+        } else if (program) {
+
+            programSelect.value =
+                "Other";
+
+            otherProgram.value =
+                program;
+
+            otherProgram.style.display =
+                "block";
+
+            otherProgram.required =
+                true;
+
+        } else {
+
+            programSelect.value =
+                "";
+
+            otherProgram.style.display =
+                "none";
+
+            otherProgram.required =
+                false;
+
+        }
+
+
+        // SECTION
+
+        document.getElementById(
+            "section"
+        ).value =
             student.section || "";
 
-        document.getElementById("contact").value =
+
+        // CONTACT
+
+        document.getElementById(
+            "contact"
+        ).value =
             student.contact || "";
 
-        document.getElementById("email").value =
+
+        // EMAIL
+
+        document.getElementById(
+            "email"
+        ).value =
             student.email || "";
+
+
+        // GUARDIAN NAME
+
+        document.getElementById(
+            "guardianName"
+        ).value =
+            student.guardianName || "";
+
+
+        // GUARDIAN CONTACT
+
+        document.getElementById(
+            "guardianContact"
+        ).value =
+            student.guardianContact || "";
 
 
     } catch (error) {
 
-        console.error("Error loading student:", error);
+        console.error(
+            "Error loading student:",
+            error
+        );
 
-        document.getElementById("editMessage").textContent =
+        document.getElementById(
+            "editMessage"
+        ).textContent =
             "Error loading student.";
 
     }
@@ -113,73 +261,326 @@ async function loadStudent() {
 
 
 // ==============================
-// UPDATE STUDENT
+// PROGRAM DROPDOWN
+// ==============================
+
+const programSelect =
+    document.getElementById(
+        "program"
+    );
+
+const otherProgram =
+    document.getElementById(
+        "otherProgram"
+    );
+
+
+if (
+    programSelect &&
+    otherProgram
+) {
+
+    programSelect.addEventListener(
+        "change",
+        () => {
+
+            if (
+                programSelect.value ===
+                "Other"
+            ) {
+
+                otherProgram.style.display =
+                    "block";
+
+                otherProgram.required =
+                    true;
+
+                otherProgram.focus();
+
+            } else {
+
+                otherProgram.style.display =
+                    "none";
+
+                otherProgram.required =
+                    false;
+
+                otherProgram.value =
+                    "";
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==============================
+// SAVE CHANGES
 // ==============================
 
 const editStudentForm =
-    document.getElementById("editStudentForm");
+    document.getElementById(
+        "editStudentForm"
+    );
 
 
-editStudentForm.addEventListener("submit", async (event) => {
+if (editStudentForm) {
 
-    event.preventDefault();
+    editStudentForm.addEventListener(
+        "submit",
+        async (event) => {
 
-
-    const studentIdValue =
-        document.getElementById("studentId").value.trim();
-
-    const fullName =
-        document.getElementById("fullName").value.trim();
-
-    const age =
-        document.getElementById("age").value;
-
-    const program =
-        document.getElementById("program").value.trim();
-
-    const section =
-        document.getElementById("section").value.trim();
-
-    const contact =
-        document.getElementById("contact").value.trim();
-
-    const email =
-        document.getElementById("email").value.trim();
+            event.preventDefault();
 
 
-    try {
-
-        const studentRef =
-            doc(db, "students", studentId);
-
-
-        await updateDoc(studentRef, {
-
-            studentId: studentIdValue,
-            fullName: fullName,
-            age: Number(age),
-            program: program,
-            section: section,
-            contact: contact,
-            email: email
-
-        });
+            const editMessage =
+                document.getElementById(
+                    "editMessage"
+                );
 
 
-        document.getElementById("editMessage").textContent =
-            "Student updated successfully!";
+            // GET VALUES
+
+            const firstName =
+                document.getElementById(
+                    "firstName"
+                ).value.trim();
 
 
-    } catch (error) {
+            const middleName =
+                document.getElementById(
+                    "middleName"
+                ).value.trim();
 
-        console.error("Error updating student:", error);
 
-        document.getElementById("editMessage").textContent =
-            "Error updating student.";
+            const lastName =
+                document.getElementById(
+                    "lastName"
+                ).value.trim();
 
-    }
 
-});
+            const age =
+                document.getElementById(
+                    "age"
+                ).value;
+
+
+            const section =
+                document.getElementById(
+                    "section"
+                ).value.trim();
+
+
+            const contact =
+                document.getElementById(
+                    "contact"
+                ).value.trim();
+
+
+            const email =
+                document.getElementById(
+                    "email"
+                ).value.trim();
+
+
+            const guardianName =
+                document.getElementById(
+                    "guardianName"
+                ).value.trim();
+
+
+            const guardianContact =
+                document.getElementById(
+                    "guardianContact"
+                ).value.trim();
+
+
+            // GET PROGRAM
+
+            let program =
+                programSelect.value;
+
+
+            if (
+                program === "Other"
+            ) {
+
+                program =
+                    otherProgram.value.trim();
+
+            }
+
+
+            // VALIDATE CONTACT
+
+            if (
+                !/^\d{11}$/.test(
+                    contact
+                )
+            ) {
+
+                editMessage.textContent =
+                    "Contact number must be exactly 11 digits.";
+
+                return;
+
+            }
+
+
+            // VALIDATE GUARDIAN CONTACT
+
+            if (
+                !/^\d{11}$/.test(
+                    guardianContact
+                )
+            ) {
+
+                editMessage.textContent =
+                    "Guardian contact number must be exactly 11 digits.";
+
+                return;
+
+            }
+
+
+            // VALIDATE OTHER PROGRAM
+
+            if (
+                programSelect.value ===
+                    "Other" &&
+                program === ""
+            ) {
+
+                editMessage.textContent =
+                    "Please enter the program.";
+
+                return;
+
+            }
+
+
+            // CREATE FULL NAME
+
+            const fullName =
+                [
+                    firstName,
+                    middleName,
+                    lastName
+                ]
+                    .filter(Boolean)
+                    .join(" ");
+
+
+            try {
+
+                const studentRef =
+                    doc(
+                        db,
+                        "students",
+                        studentDocumentId
+                    );
+
+
+                await updateDoc(
+                    studentRef,
+                    {
+
+                        firstName:
+                            firstName,
+
+                        middleName:
+                            middleName,
+
+                        lastName:
+                            lastName,
+
+                        fullName:
+                            fullName,
+
+                        age:
+                            Number(age),
+
+                        program:
+                            program,
+
+                        section:
+                            section,
+
+                        contact:
+                            contact,
+
+                        email:
+                            email,
+
+                        guardianName:
+                            guardianName,
+
+                        guardianContact:
+                            guardianContact
+
+                    }
+                );
+
+
+                editMessage.textContent =
+                    "Student updated successfully!";
+
+
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            "students.html";
+
+                    },
+                    1000
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error updating student:",
+                    error
+                );
+
+
+                editMessage.textContent =
+                    "Error updating student.";
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==============================
+// CANCEL
+// ==============================
+
+const cancelButton =
+    document.getElementById(
+        "cancelButton"
+    );
+
+
+if (cancelButton) {
+
+    cancelButton.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "students.html";
+
+        }
+    );
+
+}
 
 
 // ==============================
@@ -187,21 +588,34 @@ editStudentForm.addEventListener("submit", async (event) => {
 // ==============================
 
 const logoutButton =
-    document.getElementById("logoutButton");
+    document.getElementById(
+        "logoutButton"
+    );
 
 
-logoutButton.addEventListener("click", async () => {
+if (logoutButton) {
 
-    try {
+    logoutButton.addEventListener(
+        "click",
+        async () => {
 
-        await signOut(auth);
+            try {
 
-        window.location.href = "index.html";
+                await signOut(auth);
 
-    } catch (error) {
+                window.location.href =
+                    "index.html";
 
-        console.error("Logout error:", error);
+            } catch (error) {
 
-    }
+                console.error(
+                    "Logout error:",
+                    error
+                );
 
-});
+            }
+
+        }
+    );
+
+}
