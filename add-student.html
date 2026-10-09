@@ -8,100 +8,930 @@
     <title>Add Student - Student Management System</title>
 
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        .add-student-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px 35px;
+            overflow-y: auto;
+        }
+
+        .add-student-card {
+            width: 800px;
+            max-width: 100%;
+            background: white;
+            border-radius: 14px;
+            border-top: 6px solid #1565c0;
+            padding: 22px 42px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .add-student-card h1 {
+            margin: 0;
+            color: #222;
+        }
+
+        .add-student-description {
+            margin-top: 5px;
+            margin-bottom: 15px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        #studentForm {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 25px;
+            row-gap: 8px;
+        }
+
+        .form-group {
+            width: 100%;
+        }
+
+        .full-width {
+            grid-column: 1 / 3;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            height: 36px;
+            padding: 7px 12px;
+            border: 1px solid #ccd4dd;
+            border-radius: 7px;
+            font-size: 13px;
+            outline: none;
+            background: white;
+            color: #222;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #1565c0;
+        }
+
+        #studentId {
+            background: #f3f6fa;
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        .optional-label {
+            color: #888;
+            font-weight: normal;
+            font-size: 11px;
+        }
+
+        #otherProgram {
+            display: none;
+            margin-top: 5px;
+        }
+
+        .section-title {
+            grid-column: 1 / 3;
+            display: flex;
+            align-items: center;
+            margin-top: 7px;
+            margin-bottom: 5px;
+        }
+
+        .section-title span {
+            display: block;
+            width: 5px;
+            height: 25px;
+            background: #f57c00;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #222;
+        }
+
+        .guardian-section {
+            margin-top: 12px;
+        }
+
+        .add-student-submit {
+            grid-column: 1 / 3;
+            width: 100%;
+            height: 40px;
+            margin-top: 12px;
+            border: none;
+            border-radius: 7px;
+            background: #1565c0;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .add-student-submit:hover {
+            background: #0d47a1;
+        }
+
+        #studentMessage {
+            grid-column: 1 / 3;
+            text-align: center;
+            margin: 5px 0 0;
+            font-size: 13px;
+        }
+
+        @media (max-width: 700px) {
+
+            .add-student-content {
+                padding: 15px;
+            }
+
+            .add-student-card {
+                padding: 20px;
+            }
+
+            #studentForm {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width,
+            .section-title,
+            .add-student-submit,
+            #studentMessage {
+                grid-column: 1;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
     <div class="dashboard-container">
 
+
+        <!-- SIDEBAR -->
+
         <aside class="sidebar">
 
-            <h2>Student Management</h2>
+            <h2>
+                Student Management
+            </h2>
 
             <nav>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="students.html">Students</a>
-                <a href="add-students.html">Add Student</a>
-                <button id="logoutButton">Logout</button>
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="students.html">
+                    Students
+                </a>
+
+                <a href="add-student.html">
+                    Add Student
+                </a>
+
+                <button id="logoutButton">
+                    Logout
+                </button>
+
             </nav>
 
         </aside>
 
 
-        <main class="main-content">
+        <!-- ADD STUDENT -->
 
-            <h1>Add Student</h1>
+        <main class="add-student-content">
 
-            <form id="studentForm">
+            <div class="add-student-card">
 
-                <label for="studentId">Student ID</label>
-                <input
-                    type="text"
-                    id="studentId"
-                    placeholder="Enter student ID"
-                    required
-                >
+                <h1>
+                    Add Student
+                </h1>
 
-                <label for="fullName">Full Name</label>
-                <input
-                    type="text"
-                    id="fullName"
-                    placeholder="Enter full name"
-                    required
-                >
+                <p class="add-student-description">
+                    Enter the student's information below.
+                </p>
 
-                <label for="age">Age</label>
-                <input
-                    type="number"
-                    id="age"
-                    placeholder="Enter age"
-                    required
-                >
 
-                <label for="program">Course / Program</label>
-                <input
-                    type="text"
-                    id="program"
-                    placeholder="Enter course or program"
-                    required
-                >
+                <form id="studentForm">
 
-                <label for="section">Section</label>
-                <input
-                    type="text"
-                    id="section"
-                    placeholder="Enter section"
-                    required
-                >
 
-                <label for="contact">Contact Number</label>
-                <input
-                    type="text"
-                    id="contact"
-                    placeholder="Enter contact number"
-                    required
-                >
+                    <!-- STUDENT INFORMATION -->
 
-                <label for="email">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Enter email"
-                    required
-                >
+                    <div class="section-title">
 
-                <button type="submit">Add Student</button>
+                        <span></span>
 
-                <p id="studentMessage"></p>
+                        <h2>
+                            Student Information
+                        </h2>
 
-            </form>
+                    </div>
+
+
+                    <!-- STUDENT ID -->
+
+                    <div class="form-group full-width">
+
+                        <label for="studentId">
+                            Student ID
+                        </label>
+
+                        <input
+                            type="text"
+                            id="studentId"
+                            value="2026-001"
+                            readonly
+                        >
+
+                    </div>
+
+
+                    <!-- FIRST NAME -->
+
+                    <div class="form-group">
+
+                        <label for="firstName">
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="firstName"
+                            placeholder="Enter first name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- MIDDLE NAME -->
+
+                    <div class="form-group">
+
+                        <label for="middleName">
+                            Middle Name
+                            <span class="optional-label">
+                                (Optional)
+                            </span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="middleName"
+                            placeholder="Enter middle name"
+                        >
+
+                    </div>
+
+
+                    <!-- LAST NAME -->
+
+                    <div class="form-group">
+
+                        <label for="lastName">
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            placeholder="Enter last name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- AGE -->
+
+                    <div class="form-group">
+
+                        <label for="age">
+                            Age
+                        </label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            placeholder="Enter age"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- PROGRAM -->
+
+                    <div class="form-group">
+
+                        <label for="program">
+                            Program
+                        </label>
+
+                        <select
+                            id="program"
+                            required
+                        >
+
+                            <option value="">
+                                Select program
+                            </option>
+
+                            <option value="BSCS">
+                                BSCS
+                            </option>
+
+                            <option value="BSIT">
+                                BSIT
+                            </option>
+
+                            <option value="BSED">
+                                BSED
+                            </option>
+
+                            <option value="BSBA">
+                                BSBA
+                            </option>
+
+                            <option value="BSTM">
+                                BSTM
+                            </option>
+
+                            <option value="BSENTREP">
+                                BSENTREP
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                        <input
+                            type="text"
+                            id="otherProgram"
+                            placeholder="Enter program"
+                        >
+
+                    </div>
+
+
+                    <!-- SECTION -->
+
+                    <div class="form-group">
+
+                        <label for="section">
+                            Section
+                        </label>
+
+                        <input
+                            type="text"
+                            id="section"
+                            placeholder="Enter section"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- CONTACT -->
+
+                    <div class="form-group">
+
+                        <label for="contact">
+                            Contact Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="contact"
+                            placeholder="11-digit contact number"
+                            maxlength="11"
+                            inputmode="numeric"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ================================= -->
+                    <!-- GUARDIAN INFORMATION -->
+                    <!-- ================================= -->
+
+                    <div
+                        class="section-title guardian-section"
+                    >
+
+                        <span></span>
+
+                        <h2>
+                            Guardian Information
+                        </h2>
+
+                    </div>
+
+
+                    <!-- GUARDIAN NAME -->
+
+                    <div class="form-group">
+
+                        <label for="guardianName">
+                            Guardian Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="guardianName"
+                            placeholder="Enter guardian name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- GUARDIAN CONTACT -->
+
+                    <div class="form-group">
+
+                        <label for="guardianContact">
+                            Guardian Contact Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="guardianContact"
+                            placeholder="11-digit contact number"
+                            maxlength="11"
+                            inputmode="numeric"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- ADD BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="add-student-submit"
+                    >
+                        Add Student
+                    </button>
+
+
+                    <!-- MESSAGE -->
+
+                    <p id="studentMessage"></p>
+
+
+                </form>
+
+            </div>
 
         </main>
 
     </div>
 
 
-    <script type="module" src="js/students.js"></script>
+    <script type="module">
+
+        import {
+            collection,
+            getDocs,
+            addDoc
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+        import {
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+        import {
+            db,
+            auth
+        } from "./js/firebase.js";
+
+
+        const form = document.getElementById("studentForm");
+
+        const program = document.getElementById("program");
+
+        const otherProgram =
+            document.getElementById("otherProgram");
+
+        const studentId =
+            document.getElementById("studentId");
+
+        const message =
+            document.getElementById("studentMessage");
+
+        const logoutButton =
+            document.getElementById("logoutButton");
+
+
+        /* AUTHENTICATION */
+
+        onAuthStateChanged(auth, (user) => {
+
+            if (!user) {
+
+                window.location.href = "index.html";
+
+            }
+
+        });
+
+
+        /* OTHER PROGRAM */
+
+        program.addEventListener("change", () => {
+
+            if (program.value === "Other") {
+
+                otherProgram.style.display = "block";
+
+                otherProgram.required = true;
+
+            } else {
+
+                otherProgram.style.display = "none";
+
+                otherProgram.required = false;
+
+                otherProgram.value = "";
+
+            }
+
+        });
+
+
+        /* NUMBERS ONLY */
+
+        document
+            .getElementById("contact")
+            .addEventListener("input", function () {
+
+                this.value =
+                    this.value.replace(/\D/g, "");
+
+            });
+
+
+        document
+            .getElementById("guardianContact")
+            .addEventListener("input", function () {
+
+                this.value =
+                    this.value.replace(/\D/g, "");
+
+            });
+
+
+        /* GET NEXT STUDENT ID */
+
+        async function getNextStudentId() {
+
+            const snapshot =
+                await getDocs(collection(db, "students"));
+
+            let highestNumber = 0;
+
+            snapshot.forEach((doc) => {
+
+                const data = doc.data();
+
+                if (data.studentId) {
+
+                    const parts =
+                        data.studentId.split("-");
+
+                    if (parts.length === 2) {
+
+                        const number =
+                            parseInt(parts[1]);
+
+                        if (
+                            !isNaN(number) &&
+                            number > highestNumber
+                        ) {
+
+                            highestNumber = number;
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+            const nextNumber =
+                highestNumber + 1;
+
+            return (
+                "2026-" +
+                String(nextNumber).padStart(3, "0")
+            );
+
+        }
+
+
+        /* SHOW NEXT ID */
+
+        async function showNextStudentId() {
+
+            try {
+
+                const nextId =
+                    await getNextStudentId();
+
+                studentId.value = nextId;
+
+            } catch (error) {
+
+                console.error(error);
+
+                studentId.value = "2026-001";
+
+            }
+
+        }
+
+        showNextStudentId();
+
+
+        /* ADD STUDENT */
+
+        form.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+
+            message.textContent = "";
+
+            try {
+
+                const firstName =
+                    document
+                        .getElementById("firstName")
+                        .value
+                        .trim();
+
+                const middleName =
+                    document
+                        .getElementById("middleName")
+                        .value
+                        .trim();
+
+                const lastName =
+                    document
+                        .getElementById("lastName")
+                        .value
+                        .trim();
+
+                const age =
+                    document
+                        .getElementById("age")
+                        .value;
+
+                const section =
+                    document
+                        .getElementById("section")
+                        .value
+                        .trim();
+
+                const contact =
+                    document
+                        .getElementById("contact")
+                        .value
+                        .trim();
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+                const guardianName =
+                    document
+                        .getElementById("guardianName")
+                        .value
+                        .trim();
+
+                const guardianContact =
+                    document
+                        .getElementById("guardianContact")
+                        .value
+                        .trim();
+
+
+                /* CONTACT VALIDATION */
+
+                if (contact.length !== 11) {
+
+                    message.textContent =
+                        "Contact number must be exactly 11 digits.";
+
+                    message.style.color = "#d32f2f";
+
+                    return;
+
+                }
+
+
+                if (guardianContact.length !== 11) {
+
+                    message.textContent =
+                        "Guardian contact number must be exactly 11 digits.";
+
+                    message.style.color = "#d32f2f";
+
+                    return;
+
+                }
+
+
+                /* PROGRAM */
+
+                let selectedProgram =
+                    program.value;
+
+                if (selectedProgram === "Other") {
+
+                    selectedProgram =
+                        otherProgram.value.trim();
+
+                    if (!selectedProgram) {
+
+                        message.textContent =
+                            "Please enter the program.";
+
+                        message.style.color =
+                            "#d32f2f";
+
+                        return;
+
+                    }
+
+                }
+
+
+                /* FULL NAME */
+
+                const fullName =
+                    [
+                        firstName,
+                        middleName,
+                        lastName
+                    ]
+                    .filter(Boolean)
+                    .join(" ");
+
+
+                /* GET ID */
+
+                const newStudentId =
+                    await getNextStudentId();
+
+
+                studentId.value =
+                    newStudentId;
+
+
+                /* SAVE TO FIRESTORE */
+
+                await addDoc(
+                    collection(db, "students"),
+                    {
+
+                        studentId:
+                            newStudentId,
+
+                        firstName:
+                            firstName,
+
+                        middleName:
+                            middleName,
+
+                        lastName:
+                            lastName,
+
+                        fullName:
+                            fullName,
+
+                        age:
+                            Number(age),
+
+                        program:
+                            selectedProgram,
+
+                        section:
+                            section,
+
+                        contact:
+                            contact,
+
+                        email:
+                            email,
+
+                        guardianName:
+                            guardianName,
+
+                        guardianContact:
+                            guardianContact
+
+                    }
+                );
+
+
+                message.textContent =
+                    "Student added successfully!";
+
+                message.style.color =
+                    "#2e7d32";
+
+
+                form.reset();
+
+                otherProgram.style.display =
+                    "none";
+
+                otherProgram.required =
+                    false;
+
+
+                await showNextStudentId();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "Error adding student.";
+
+                message.style.color =
+                    "#d32f2f";
+
+            }
+
+        });
+
+
+        /* LOGOUT */
+
+        logoutButton.addEventListener(
+            "click",
+            async () => {
+
+                await signOut(auth);
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+    </script>
 
 </body>
 
